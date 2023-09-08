@@ -122,9 +122,7 @@ impl Duration {
     #[must_use]
     pub fn seconds(seconds: i64) -> Duration {
         let d = Duration { secs: seconds, nanos: 0 };
-        if d < MIN || d > MAX {
-            panic!("Duration::seconds out of bounds");
-        }
+        assert!(d >= MIN && d <= MAX, "Duration::seconds out of bounds");
         d
     }
 
@@ -218,6 +216,19 @@ impl Duration {
         let secs_part = try_opt!(self.num_seconds().checked_mul(NANOS_PER_SEC as i64));
         let nanos_part = self.nanos_mod_sec();
         secs_part.checked_add(nanos_part as i64)
+    }
+
+    /// Breaks the duration into whole ±seconds and fractional sub-second +nanosecond part
+    pub const fn as_parts(&self) -> (i64, i32) {
+        (self.secs, self.nanos)
+    }
+
+    /// Makes a new `Duration` from whole ±seconds and fractional sub-second +nanosecond part
+    pub fn from_parts(secs: i64, nanos: i32) -> Duration {
+        assert!((0..NANOS_PER_SEC).contains(&nanos), "nanosecond part out of range");
+        let d = Duration { secs, nanos };
+        assert!(d >= MIN && d <= MAX, "Duration::from_parts out of bounds");
+        d
     }
 
     /// Add two durations, returning `None` if overflow occurred.
