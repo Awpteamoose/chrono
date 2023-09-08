@@ -1120,7 +1120,7 @@ mod tests {
     use crate::{DateTime, NaiveDate, NaiveDateTime, TimeZone, Utc};
 
     use bincode::{deserialize, serialize};
-    use serde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[test]
     fn test_serde_serialize() {

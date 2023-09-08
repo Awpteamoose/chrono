@@ -51,6 +51,7 @@ macro_rules! try_opt {
 ///
 /// This also allows for the negative duration; see individual methods for details.
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[cfg_attr(feature = "rkyv", derive(Archive, Deserialize, Serialize))]
 #[cfg_attr(
     feature = "rkyv",
