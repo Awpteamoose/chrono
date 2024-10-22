@@ -45,7 +45,7 @@ use crate::{Date, DateTime};
     any(feature = "rkyv", feature = "rkyv-16", feature = "rkyv-32", feature = "rkyv-64"),
     derive(Archive, Deserialize, Serialize),
     rkyv(
-		compare(PartialEq),
+		compare(PartialEq, PartialOrd),
 		derive(Clone, Copy, PartialEq, Eq, Debug, Hash),
 	),
 )]
